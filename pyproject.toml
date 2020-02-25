@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "scrapy-gzip-exporters"
+version = "0.1.0"
+description = "Scrapy Item Exporters which allows export into gzip compressed feed"
+authors = ["divtiply"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^2.7"
+scrapy = "^1.0.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
