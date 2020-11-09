@@ -1,11 +1,11 @@
 import gzip
-from scrapy.exporters import (
-    JsonLinesItemExporter,
-    JsonItemExporter,
-    XmlItemExporter,
-    CsvItemExporter,
-)
 
+from scrapy.exporters import (
+    CsvItemExporter,
+    JsonItemExporter,
+    JsonLinesItemExporter,
+    XmlItemExporter,
+)
 
 FEED_EXPORTERS = {
     # "jsonl" is widely recognized JSON lines file extension
@@ -20,28 +20,27 @@ FEED_EXPORTERS = {
 
 
 # Derived from https://github.com/scrapy/scrapy/issues/2174
-class GzipItemExporterMixin(object):
-
+class GzipMixin(object):
     def __init__(self, file, **kwargs):
         self.gzfile = gzip.GzipFile(fileobj=file)
-        super(GzipItemExporterMixin, self).__init__(self.gzfile, **kwargs)
+        super(GzipMixin, self).__init__(self.gzfile, **kwargs)
 
     def finish_exporting(self):
-        super(GzipItemExporterMixin, self).finish_exporting()
+        super(GzipMixin, self).finish_exporting()
         self.gzfile.close()
 
 
-class JsonLinesGzipItemExporter(GzipItemExporterMixin, JsonLinesItemExporter):
+class JsonLinesGzipItemExporter(GzipMixin, JsonLinesItemExporter):
     pass
 
 
-class JsonGzipItemExporter(GzipItemExporterMixin, JsonItemExporter):
+class JsonGzipItemExporter(GzipMixin, JsonItemExporter):
     pass
 
 
-class XmlGzipItemExporter(GzipItemExporterMixin, XmlItemExporter):
+class XmlGzipItemExporter(GzipMixin, XmlItemExporter):
     pass
 
 
-class CsvGzipItemExporter(GzipItemExporterMixin, CsvItemExporter):
+class CsvGzipItemExporter(GzipMixin, CsvItemExporter):
     pass
